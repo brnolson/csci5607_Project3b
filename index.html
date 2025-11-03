@@ -20,7 +20,7 @@
         <h2 class="gib">Ray Tracing 2: Triangles & Recursion</h2>
         <div class="row mt14">
           <div class="col">
-            <p class="mutedblock">This project takes my Project 3A raytracer and extends it with full triangle mesh rendering, including smooth per-vertex normal interpolation, recursive reflection and refraction, and extra geometric primitives like boxes and planes. The raytracer handles multiple light types (point, directional, and spotlight) with proper shadow computations, and now includes performance optimizations through BVH acceleration and visual quality improvements via jittered supersampling.</p>
+            <p class="mutedblock">This project takes my Project 3A raytracer and extends it with full triangle mesh support. Not only that but this project included smooth per-vertex normal interpolation, recursive reflection and refraction, and extra geometric primitives like boxes and planes. The raytracer handles multiple light types (point, directional, and spotlight) with shadow computations and now includes major performance optimizations through BVH acceleration.</p>
 
             <h3 class="gib">Implementation Summary</h3>
             <p class="mutedblock"><strong>Total Points: 105/100</strong></p>
@@ -29,8 +29,8 @@
               <li><strong>Bonus Features:</strong> 20 points total</li>
             </ul>
 
-            <h3 class="gib">Technical Highlights</h3>
-            <p class="mutedblock">Triangle intersections use the Möller-Trumbore algorithm with barycentric coordinates for efficient testing and smooth normal interpolation. The BVH acceleration structure organizes triangles spatially using recursive subdivision and axis-aligned bounding boxes, providing significant speedups for complex meshes. Jittered supersampling distributes samples randomly within each pixel to reduce aliasing artifacts while maintaining good performance. All secondary rays (reflections, refractions, shadows) use small epsilon offsets to avoid self-intersection problems.</p>
+            <h3 class="gib">Technical Challenges</h3>
+            <p class="mutedblock">I ran into a few real struggles while working on this project. Getting BVH acceleration working was a huge challenge. Figuring out how to split triangles and debug the traversal logic took way longer than I expected. I also spent a lot of time wrestling with texture and normal mapping on triangle meshes, especially when mixing smooth shading and different materials. In the end, these struggles taught me a lot about how important it is to both make things fast and get the visuals right.</p>
 
           </div>
 
@@ -38,10 +38,10 @@
             <div class="card card-inner">
               <div class="mutedblock" style="margin-bottom:12px">
                 <strong class="gib">Project Files</strong>
-                <p class="mutedblock">Everything you need is in the zip: full source code, sample scenes to test with, and compilation instructions. Just feed a scene file to the compiled binary like <code>./raytracer my_scene.txt</code> and watch it render.</p>
+                <p class="mutedblock">Everything you need is in the zip below: full source code, sample scenes to test with, and compilation instructions. Just extract the source code, feed a scene file to the compiled binary like <code>./raytracer my_scene.txt</code>, and watch it render.</p>
               </div>
-              <a class="dl" href="Proj3b_BrenenOlson.zip" download>Download Project 3B Files</a>
-              <div style="margin-top:8px;color:var(--muted);font-size:12px">Includes: Full C++ source (geometry.h, scene.h/cpp, material.h, lighting.h, ray.h, main.cpp), several test scenes, and a README explaining how to build and run everything.</div>
+              <a class="dl" href="Project3b_BrenenOlson.zip" download>Download Project 3B Files</a>
+              <div style="margin-top:8px;color:var(--muted);font-size:12px">Includes: Full C++ source (geometry.h, scene.h/cpp, material.h, lighting.h, ray.h, main.cpp), precompiled binary file, and several test scenes.</div>
             </div>
           </div>
         </div>
@@ -65,7 +65,7 @@
         <h3 class="label">Bonus Features Implemented (20 points)</h3>
         
         <h3 class="gib"><span class="points">+5 points</span> - Spot Lights</h3>
-        <p class="mutedblock">Added cone-shaped lights with smooth intensity falloff between inner and outer angles. Implemented in lighting.h with position, direction, and angle parameters.</p>
+        <p class="mutedblock">Added cone-shaped lights with smooth intensity falloff between inner and outer angles.</p>
 
         <h3 class="gib"><span class="points">+5 points</span> - Boxes and Planes</h3>
         <p class="mutedblock">Added two new primitive types:</p>
@@ -75,11 +75,11 @@
         </ul>
 
         <h3 class="gib"><span class="points">+10 points</span> - BVH Acceleration Structure</h3>
-        <p class="mutedblock">Added spatial acceleration structure to speed up ray-triangle intersection tests.</p>
+        <p class="mutedblock">Added spatial acceleration structure to speed up ray-triangle intersection tests significantly.</p>
         <ul class="mutedblock">
           <li>Uses binary tree with bounding boxes to organize triangles</li>
           <li>Reduces intersection tests from O(n) to O(log n)</li>
-          <li>Achieves 8-10× speedup on complex scenes</li>
+          <li>Achieves 10×(+) speedup on complex scenes</li>
         </ul>
       </section>
 
@@ -89,7 +89,7 @@
           <p><strong>Purpose:</strong> Documentation of Halloween event attendance per professor's extension policy.</p>
           <figure style="margin:12px 0">
             <img src="assets/halloween_party.jpg" alt="Halloween party costume photo" style="max-width:100%;height:auto;border-radius:6px;box-shadow:0 2px 8px rgba(0,0,0,0.12)">
-            <figcaption>My fiancée and I went to a Halloween party dressed as characters from Batman - she was the Riddler and I was the Joker. Her makeup and costume were a huge hit, though somehow folks had trouble recognizing my costume!</figcaption>
+            <figcaption>My fiancée and I went to a Halloween party dressed as characters from Batman. She went as the Joker and I went as the Riddler. Her makeup and costume were a huge hit, sadly many people had no idea who I was :(</figcaption>
           </figure>
         </div>
       </section>
@@ -97,7 +97,7 @@
       <section class="card">
         <h3 class="label">Watch Challenge Showcase</h3>
         <div class="mutedblock">
-          <p>I rendered the highly detailed blue and gold watch model using the power of the BVH acceleration.</p>
+          <p>I rendered the highly detailed blue and gold watch model using the insane power of the BVH acceleration.</p>
           <figure style="margin:12px 0">
             <img src="assets/watch_blue_and_gold.bmp" alt="Complex watch render" style="max-width:100%;height:auto;border-radius:6px">
             <figcaption>This scene contains thousands of triangles and would have taken hours to render without BVH acceleration. With BVH, it completed in seconds while maintaining full visual quality.</figcaption>
@@ -129,7 +129,7 @@
           <h3>Complex Geometry & BVH Acceleration</h3>
           <div class="pair">
             <figure class="pair-item">
-              <img src="assets/gear.bmp" alt="Spiral structure">
+              <img src="assets/gear.bmp" alt="Gear">
               <figcaption><strong>Bonus Feature Highlight:</strong> BVH Acceleration Structure
               <ul>
                 <li>Efficiently renders complex geometric structures</li>
@@ -151,7 +151,6 @@
                 <li>Multiple material types (diffuse, specular)</li>
                 <li>Point lights with distance falloff</li>
                 <li>Shadow casting and receiving</li>
-                <li>Bonus: Plane primitive for ground surface</li>
               </ul></figcaption>
             </figure>
           </div>
@@ -177,13 +176,13 @@
           <h3>Environmental Effects</h3>
           <div class="pair">
             <figure class="pair-item">
-              <img src="assets/ShadowTest.bmp" alt="Tree with lighting effects">
+              <img src="assets/ShadowTest.bmp" alt="Post with lighting effects">
               <figcaption><strong>Advanced Features:</strong>
               <ul>
                 <li>Bonus: Soft shadows and area lighting</li>
                 <li>Bonus: Box primitives for structures</li>
                 <li>Multiple light source types working together</li>
-                <li>Complex shadow interactions on varied surfaces</li>
+                <li>Shadow interactions on varied surfaces</li>
               </ul></figcaption>
             </figure>
           </div>
@@ -203,19 +202,6 @@
 
           <p><strong>Output:</strong> The program writes a BMP file specified by the <code>output_image:</code> line in your scene file. You'll see progress updates in the terminal while it renders, plus timing info when it finishes.</p>
         </div>
-      </section>
-
-      <section class="card">
-        <h3 class="label">Source Code Organization</h3>
-        <ul class="mutedblock">
-          <li><strong>geometry.h</strong> — Vec3 class implementing 3D vectors with all the standard operations (add, subtract, dot product, cross product, normalize). Also defines Color as a Vec3 typedef and a clampColor() utility.</li>
-          <li><strong>ray.h</strong> — Ray structure holding origin point and direction vector, plus an at() method to compute points along the ray at parameter t.</li>
-          <li><strong>material.h</strong> — Material structure with properties for ambient, diffuse, specular, and transmissive colors, plus shininess exponent and index of refraction.</li>
-          <li><strong>lighting.h</strong> — Light source definitions: PointLight (position + intensity), DirectionalLight (direction + intensity), and SpotLight (position, direction, intensity, plus two cone angles with getFalloff() method).</li>
-          <li><strong>scene.h</strong> — Core Scene class and all geometric primitives (Sphere, Triangle, Plane, Box). Includes AABB and BVHNode structures for acceleration. Declares all major methods like setupCamera(), intersectScene(), shade(), trace(), etc.</li>
-          <li><strong>scene.cpp</strong> — Implements all the Scene methods including camera setup, ray generation (both regular and jittered), BVH construction and traversal, intersection testing, lighting calculations, shadow testing, and recursive tracing.</li>
-          <li><strong>main.cpp</strong> — Scene file parser that reads text files and populates the Scene object, plus the main render loop that generates rays, traces them, accumulates samples for supersampling, and writes the final BMP output.</li>
-        </ul>
       </section>
     </div>
   </body>
