@@ -1,0 +1,283 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Project 3B - Raytracer</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <div class="wrap">
+      <header>
+        <div class="logo">⧉</div>
+        <div>
+          <h1>Project 3B - Brenen Olson</h1>
+          <div class="meta">CSCI 5607</div>
+        </div>
+      </header>
+
+      <section class="card">
+        <h2 class="gib">Ray Tracing 2: Triangles & Recursion</h2>
+        <div class="row mt14">
+          <div class="col">
+            <p class="mutedblock">This project extends my Project 3A raytracer to implement full triangle support (including optional per-vertex normals for smooth shading), recursive ray tracing for reflections and refractions, and additional geometric primitives. The implementation focuses on correct intersection tests, proper normal computation, and handling of complex materials with multiple light types.</p>
+
+            <h3 class="gib">Implementation Summary</h3>
+            <p class="mutedblock"><strong>Total Points: 95/100</strong></p>
+            <ul class="mutedblock">
+              <li><strong>Required Features:</strong> 85 points (all implemented)</li>
+              <li><strong>Bonus Features:</strong> 10 points (Spot Lights: 5pts, Boxes and Planes: 5pts)</li>
+            </ul>
+
+            <h3 class="gib">Technical Notes</h3>
+            <p class="mutedblock">The raytracer uses Möller–Trumbore algorithm for efficient triangle intersection with barycentric coordinate computation for smooth normal interpolation. Self-intersection artifacts are prevented using epsilon offsets along surface normals. Shadow rays are tested against all scene geometry with proper distance bounds for point lights and infinite distance for directional lights.</p>
+
+          </div>
+
+          <div style="width:320px">
+            <div class="card card-inner">
+              <div class="mutedblock" style="margin-bottom:12px">
+                <strong class="gib">Project Files</strong>
+                <p class="mutedblock">The downloadable package contains the full source code, sample scenes, and build instructions. The compiled binary accepts a scene file as input: <code>./raytracer scene_file.txt</code></p>
+              </div>
+              <a class="dl" href="Proj3b_BrenenOlson.zip" download>Download Project 3B Files</a>
+              <div style="margin-top:8px;color:var(--muted);font-size:12px">Includes: Complete C++ source (geometry.h, scene.h/cpp, material.h, lighting.h, ray.h, main.cpp), sample scene files, and README with build instructions.</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="card">
+        <h3 class="label">Required Features (85 points) - All Implemented</h3>
+        
+        <table>
+          <thead>
+            <tr>
+              <th>Feature</th>
+              <th>Implementation Details</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Arbitrary Camera</strong></td>
+              <td>Full camera control with position, forward vector, up vector, FOV, and aspect ratio (scene.h, scene.cpp setupCamera())</td>
+              <td><span class="checkmark">✓</span></td>
+            </tr>
+            <tr>
+              <td><strong>Spheres</strong></td>
+              <td>Analytic sphere intersection using quadratic equation solver (scene.h Sphere::intersect)</td>
+              <td><span class="checkmark">✓</span></td>
+            </tr>
+            <tr>
+              <td><strong>Triangles</strong></td>
+              <td>Möller–Trumbore intersection with optional per-vertex normals for smooth shading (scene.h Triangle)</td>
+              <td><span class="checkmark">✓</span></td>
+            </tr>
+            <tr>
+              <td><strong>Background Colors</strong></td>
+              <td>Arbitrary RGB background returned when rays miss all geometry (scene.h backgroundColor)</td>
+              <td><span class="checkmark">✓</span></td>
+            </tr>
+            <tr>
+              <td><strong>Materials</strong></td>
+              <td>Full Blinn-Phong shading with ambient, diffuse, specular components (material.h, scene.cpp shade())</td>
+              <td><span class="checkmark">✓</span></td>
+            </tr>
+            <tr>
+              <td><strong>Reflections</strong></td>
+              <td>Perfect mirror reflections with recursive ray tracing (scene.cpp shade(), depth-limited)</td>
+              <td><span class="checkmark">✓</span></td>
+            </tr>
+            <tr>
+              <td><strong>Refractions</strong></td>
+              <td>Snell's law refraction with index of refraction (IOR) support (scene.cpp shade(), transmissive materials)</td>
+              <td><span class="checkmark">✓</span></td>
+            </tr>
+            <tr>
+              <td><strong>Point Lights</strong></td>
+              <td>Omnidirectional lights with distance attenuation (lighting.h PointLight, scene.cpp)</td>
+              <td><span class="checkmark">✓</span></td>
+            </tr>
+            <tr>
+              <td><strong>Directional Lights</strong></td>
+              <td>Infinite distance lights with uniform direction (lighting.h DirectionalLight)</td>
+              <td><span class="checkmark">✓</span></td>
+            </tr>
+            <tr>
+              <td><strong>Ambient Lighting</strong></td>
+              <td>Global ambient term applied to all surfaces (scene.h ambientLight)</td>
+              <td><span class="checkmark">✓</span></td>
+            </tr>
+            <tr>
+              <td><strong>Shadows</strong></td>
+              <td>Shadow rays test occlusion from light sources (scene.cpp inShadow(), inShadowDirectional())</td>
+              <td><span class="checkmark">✓</span></td>
+            </tr>
+            <tr>
+              <td><strong>Recursion Depth</strong></td>
+              <td>Configurable maximum ray bounce depth to prevent infinite recursion (scene.h maxDepth, scene.cpp trace())</td>
+              <td><span class="checkmark">✓</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="card">
+        <h3 class="label">Bonus Features Implemented (10 points)</h3>
+        
+        <h3 class="gib"><span class="points">+5 points</span> - Spot Lights</h3>
+        <p class="mutedblock">Implemented directional lights with angular falloff. Spot lights have a position, direction vector, and two cone angles (inner and outer) defining a smooth falloff region. The getFalloff() method computes the angular attenuation based on the angle between the light direction and the vector to the shaded point.</p>
+        <p class="mutedblock"><strong>Implementation:</strong> lighting.h SpotLight struct with angle1/angle2 parameters, scene.cpp shade() includes spotlight shading loop with falloff computation.</p>
+
+        <h3 class="gib"><span class="points">+5 points</span> - Boxes and Planes</h3>
+        <p class="mutedblock">Added support for axis-aligned boxes and infinite planes as additional geometric primitives beyond the required spheres and triangles.</p>
+        <ul class="mutedblock">
+          <li><strong>Boxes:</strong> Axis-aligned bounding box (AABB) intersection using slab method. Normal computation based on which face was hit (scene.h Box struct).</li>
+          <li><strong>Planes:</strong> Infinite planes defined by a point and normal vector, with proper two-sided normal orientation (scene.h Plane struct).</li>
+        </ul>
+        <p class="mutedblock"><strong>Implementation:</strong> Both primitives have complete intersect() methods and are integrated into the scene intersection loop in scene.cpp intersectScene().</p>
+      </section>
+
+      <section class="card">
+        <h3 class="label">Halloween Party Extension Photo</h3>
+        <div class="mutedblock">
+          <p><strong>Purpose:</strong> Proof of Halloween participation for the project extension as requested by the professor.</p>
+          <figure style="margin:12px 0">
+            <img src="assets/halloween_party.jpg" alt="Halloween party costume photo" style="max-width:100%;height:auto;border-radius:6px;box-shadow:0 2px 8px rgba(0,0,0,0.12)">
+            <figcaption>My fiancée and I attended a Halloween party dressed as the Joker and the Riddler from Batman. Everyone loved her makeup and costume; many didn't recognize my costume though!</figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <section class="card">
+        <h3 class="label">Rendered Scenes & Examples</h3>
+        <p class="mutedblock">Below are selected outputs from the raytracer demonstrating the implemented features. Each scene showcases different aspects of the rendering pipeline including triangle meshes with smooth shading, recursive reflections/refractions, spot light illumination, and multiple geometric primitive types.</p>
+
+        <div class="img-compare">
+          <h3>Triangle Mesh with Per-Vertex Normals</h3>
+          <div class="pair">
+            <figure class="pair-item">
+              <img src="assets/gear.bmp" alt="Triangle Mesh with smooth shading">
+              <figcaption><strong>Features shown:</strong> Complex triangle mesh rendered with per-vertex normal interpolation for smooth shading. Demonstrates proper barycentric interpolation and recursive ray tracing for reflections on metallic surfaces. The cylindrical gear geometry tests robust triangle intersection handling.</figcaption>
+            </figure>
+          </div>
+        </div>
+
+        <div class="img-compare">
+          <h3>Spot Light Illumination</h3>
+          <div class="pair">
+            <figure class="pair-item">
+              <img src="assets/noLabel.bmp" alt="Spot light with angular falloff">
+              <figcaption><strong>Features shown:</strong> Spot light with angular falloff illuminating a bottle. Clean shadow edges from shadow ray testing. Demonstrates the smooth transition between inner cone (full intensity) and outer cone (zero intensity) angles of the spotlight.</figcaption>
+            </figure>
+          </div>
+        </div>
+
+        <div class="img-compare">
+          <h3>Reflections and Multiple Primitives</h3>
+          <div class="pair">
+            <figure class="pair-item">
+              <img src="assets/plant.bmp" alt="Reflective spheres and geometric primitives">
+              <figcaption><strong>Features shown:</strong> Reflective spheres demonstrating recursive ray tracing. Scene combines spheres, triangles (plant pot), and planes (ground). Shows proper handling of multiple material types and light interactions across different primitive types.</figcaption>
+            </figure>
+          </div>
+        </div>
+
+        <div class="img-compare">
+          <h3>Shadow Testing</h3>
+          <div class="pair">
+            <figure class="pair-item">
+              <img src="assets/ShadowTest.bmp" alt="Shadow testing scene">
+              <figcaption><strong>Features shown:</strong> Shadow ray testing with stylized streetlamp scene. Demonstrates proper occlusion testing for both point lights and directional lights. Multiple geometric primitives (boxes, spheres, planes) all properly cast and receive shadows.</figcaption>
+            </figure>
+          </div>
+        </div>
+      </section>
+
+      <section class="card">
+        <h3 class="label">Technical Implementation Details</h3>
+        
+        <h3 class="gib">Triangle Intersection</h3>
+        <p class="mutedblock">Triangles use the Möller–Trumbore algorithm for fast ray-triangle intersection. The method computes barycentric coordinates (u, v) which are then used to interpolate vertex normals when smooth shading is enabled. If vertex normals are not provided or invalid, a face normal is computed from the triangle edges using the cross product.</p>
+
+        <h3 class="gib">Normal Handling</h3>
+        <p class="mutedblock">For triangles without explicit vertex normals, the face normal is oriented to face toward the ray origin to ensure proper lighting. For smooth-shaded triangles, vertex normals are interpolated using barycentric weights: <code>normal = n0 * w + n1 * u + n2 * v</code> where <code>w = 1 - u - v</code>.</p>
+
+        <h3 class="gib">Self-Intersection Prevention</h3>
+        <p class="mutedblock">Secondary rays (reflection, refraction, shadow) are offset from the surface by a small epsilon (0.001) along the surface normal to prevent floating-point precision errors from causing self-intersection artifacts.</p>
+
+        <h3 class="gib">Recursive Ray Tracing</h3>
+        <p class="mutedblock">Reflection and refraction are handled through recursive trace() calls with a depth counter. When the maximum depth is reached, recursion terminates and returns black. This prevents infinite recursion while allowing realistic multi-bounce lighting.</p>
+      </section>
+
+      <section class="card">
+        <h3 class="label">Scene File Format</h3>
+        <p class="mutedblock">The raytracer reads plain text scene files with a simple colon-separated format. Example commands:</p>
+        <pre class="cmd">camera_pos: 0 5 10
+camera_fwd: 0 0 -1
+camera_up: 0 1 0
+camera_fov_ha: 45
+film_resolution: 800 600
+background: 0.2 0.3 0.5
+ambient_light: 0.1 0.1 0.1
+max_depth: 5
+
+material: 0.1 0.1 0.1  0.8 0.2 0.2  0.5 0.5 0.5  32  0 0 0  1.0
+sphere: 0 1 0 1.5
+
+point_light: 1 1 1  5 10 5
+directional_light: 0.5 0.5 0.5  -1 -1 -1
+spot_light: 1 1 1  0 5 0  0 -1 0  20 40
+
+vertex: -1 0 -1
+vertex: 1 0 -1
+vertex: 0 2 0
+triangle: 0 1 2
+
+plane: 0 0 0  0 1 0
+box: -2 0 -2  2 1 2</pre>
+      </section>
+
+      <section class="card">
+        <h3 class="label">Build & Usage Instructions</h3>
+        <div class="mutedblock">
+          <p><strong>Compile:</strong></p>
+          <pre class="cmd">g++ -std=c++17 -O3 -o raytracer main.cpp scene.cpp</pre>
+
+          <p><strong>Run:</strong></p>
+          <pre class="cmd">./raytracer scene_file.txt</pre>
+
+          <p><strong>Dependencies:</strong> STB image write library (included as stb_image_write.h)</p>
+
+          <p><strong>Output:</strong> Renders to BMP file specified in scene file's <code>output_image:</code> line. Progress is printed to console during rendering.</p>
+        </div>
+      </section>
+
+      <section class="card">
+        <h3 class="label">Source Code Structure</h3>
+        <ul class="mutedblock">
+          <li><strong>geometry.h</strong> — Vec3 class with vector operations (dot, cross, normalize) and Color typedef</li>
+          <li><strong>ray.h</strong> — Ray structure with origin, direction, and point-along-ray computation</li>
+          <li><strong>material.h</strong> — Material properties (ambient, diffuse, specular, transmissive, shininess, IOR)</li>
+          <li><strong>lighting.h</strong> — PointLight, DirectionalLight, and SpotLight structures</li>
+          <li><strong>scene.h</strong> — Scene class with all geometric primitives (Sphere, Triangle, Plane, Box), camera setup, and rendering methods</li>
+          <li><strong>scene.cpp</strong> — Implementation of camera setup, ray generation, intersection testing, shading, and recursive ray tracing</li>
+          <li><strong>main.cpp</strong> — Scene file parser and main rendering loop with image output</li>
+        </ul>
+      </section>
+
+      <section class="card">
+        <h3 class="label">Known Limitations & Future Work</h3>
+        <ul class="mutedblock">
+          <li>No acceleration structure (BVH/KD-tree) - O(n) intersection testing limits performance on complex scenes</li>
+          <li>Single-threaded rendering - could benefit from parallelization for faster render times</li>
+          <li>No anti-aliasing/supersampling - edges may appear aliased</li>
+          <li>Hard shadows only - no soft shadows from area lights</li>
+          <li>No texture mapping - all materials use solid colors</li>
+        </ul>
+        <p class="mutedblock">These features were considered for implementation but not completed due to time constraints. They represent natural extensions for future development.</p>
+      </section>
+    </div>
+  </body>
+</html>

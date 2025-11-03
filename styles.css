@@ -1,0 +1,118 @@
+
+:root{
+	--bg:#0f1724;
+	--card:#0b1220;
+	--muted:#94a3b8;
+	--accent:#7dd3fc;
+}
+
+html, body{
+	height:100%;
+	margin:0;
+	font-family:Inter, "Segoe UI", Helvetica, Arial, sans-serif;
+	background: #071024;
+	color: #e6eef8;
+}
+
+.wrap{
+	max-width:900px;
+	margin:4vh auto;
+	padding:28px;
+	background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.06));
+	border-radius:12px;
+	box-shadow:0 8px 30px rgba(2,6,23,0.7);
+}
+
+header{display:flex;align-items:center;gap:16px}
+.logo{
+	width:64px;height:64px;border-radius:10px;
+	/* keep gradient vivid during scroll: use a background-color fallback and isolation */
+	background-color:var(--accent);
+	background-image:linear-gradient(135deg,var(--accent),#60a5fa);
+	isolation:isolate;
+	display:flex;align-items:center;justify-content:center;font-weight:700;color:#012;
+	box-shadow:0 6px 18px rgba(125,211,252,0.12);
+	will-change:transform,opacity;
+}
+
+h1{margin:0;font-size:20px}
+.meta{color:var(--muted);font-size:13px}
+
+.card{margin-top:20px;padding:18px;background:rgba(255,255,255,0.02);border-radius:10px}
+
+img.sshot{width:100%;height:auto;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:linear-gradient(90deg,#031428,#0a1b2e);object-fit:contain}
+
+.row{display:flex;gap:18px;align-items:flex-start}
+.col{flex:1}
+
+.label{font-size:13px;color:var(--muted);margin-bottom:8px}
+.mt14{margin-top:14px}
+.card-inner{padding:12px}
+
+.dl{display:inline-block;padding:10px 14px;background-color:#0ea5e9;background-image:linear-gradient(90deg,#0ea5e9,#7dd3fc);color:#012;border-radius:8px;text-decoration:none;font-weight:600;isolation:isolate}
+.mutedblock{color:var(--muted);font-size:14px;line-height:1.5}
+footer{margin-top:18px;color:var(--muted);font-size:12px}
+.gib{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(255,255,255,0.02);padding:8px;border-radius:6px}
+
+/* small responsive tweak */
+@media (max-width:720px){
+	.row{flex-direction:column}
+	.logo{width:48px;height:48px}
+}
+
+/* Image compare component */
+.img-compare{
+	position:relative;
+	margin-top:18px;
+	border-radius:8px;
+	padding: 12px;
+	overflow:hidden;
+	background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.04));
+	border:1px solid rgba(255,255,255,0.03);
+	min-height:160px;
+}
+.img-compare .pair{
+	display:flex;
+	align-items:stretch;
+}
+.img-compare .pair-item{
+	flex:1;
+	background:linear-gradient(90deg, rgba(255,255,255,0.01), rgba(0,0,0,0.02));
+	border-radius:6px;
+	overflow:hidden;
+	display:flex;
+	flex-direction:column;
+}
+.img-compare .pair-item img{width:100%;height:auto;display:block;object-fit:cover}
+.img-compare .pair-item figcaption{padding:8px 10px 10px;color:var(--muted);font-size:13px}
+.img-compare .compare-caption{padding:8px 12px;color:var(--muted);font-size:13px}
+
+@media (max-width:720px){
+	.img-compare .pair{flex-direction:column}
+}
+
+/* command snippet styling */
+details{margin-top:8px}
+details summary{cursor:pointer;color:var(--accent);font-weight:600}
+.cmd{background:rgba(2,6,23,0.6);border-radius:6px;padding:10px;margin-top:8px;color:#e6eef8;white-space:pre-wrap;font-family:ui-monospace, SFMono-Regular, Menlo, monospace;border:1px solid rgba(255,255,255,0.03)}
+.cmd[contenteditable="true"]:focus{outline:2px solid rgba(125,211,252,0.12)}
+
+/* contest entry badge styles */
+.contest-entry{position:relative;display:flex;flex-direction:column;align-items:flex-end;margin-top:8px}
+.contest-badge{background:linear-gradient(90deg,#ffd166,#ff7b7b);color:#081226;font-weight:700;padding:6px 10px;border-radius:999px;box-shadow:0 6px 18px rgba(255,123,123,0.12);transform:translateY(0);animation:badge-pulse 3s ease-in-out infinite}
+.contest-note{font-size:12px;color:var(--muted);margin-top:6px;text-align:right}
+
+@keyframes badge-pulse{0%{transform:translateY(0) scale(1)}50%{transform:translateY(-2px) scale(1.02)}100%{transform:translateY(0) scale(1)}}
+
+@media (max-width:720px){
+	.contest-entry{align-items:flex-start}
+	.contest-note{text-align:left}
+}
+
+/* header row for img-compare blocks */
+.img-compare .header-row{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.img-compare .header-row h3{margin:0;font-size:16px}
+
+@media (max-width:720px){
+  .img-compare .header-row{flex-direction:column;align-items:flex-start}
+}
